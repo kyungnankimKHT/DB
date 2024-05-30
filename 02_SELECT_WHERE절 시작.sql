@@ -61,8 +61,17 @@ WHERE dept_code is NULL;
 -- dept_code 가 모두 is NULL 인 사람의 모든 정보를 조회
 SELECT * FROM employee where dept_code is null;
 
+--보너스가 없는 사원의 이름과 보너스를 조회
+SELECT EMP_NAME, BONUS FROM EMployee where bonus IS NULL;
 
+--급여 등급이 S5인 사원의 이름과 급여 조회 SAL_LEVEL
+SELECT EMP_NAME, SALARY FROM employee WHERE sal_level = 'S5';
 
+--사원 번호가 210 인 사원의 모든 정보 조회 EMP_ID
+SELECT * FROM employee WHERE EMP_ID = '210';
+
+-- 이메일 주소가 null 이 아닌 사원의 이름과 이메일 조회
+SELECT EMP_NAME, EMAIL FROM employee WHERE EMAIL IS NOT NULL;
 
 
 
