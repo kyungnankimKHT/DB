@@ -165,9 +165,67 @@ SELECT ROUND(AVG(SALARY))
 FROM EMPLOYEE;
 
 
+/*
+***** TRIM  *****
+공백 관련 함수
+
+TRIM( [     [옵션] 문자열 | 컬럼명 FROM   ] 문자열 | 컬럼명)
 
 
+주어진 문자열의 앞쪽 | 뒤쪽 | 양쪽에 존재하는 지정된 문자열 제거
 
+-- 옵션 앞쪽(LEADING) 
+             뒤쪽(TRAILING)
+             양쪽(BOTH   기본값)
+*/
+
+SELECT '        점        심       ',
+                TRIM(LEADING '  ' FROM '        점        심       ')    -- 앞쪽 공백 제거  
+FROM DUAL;
+/*
+TRIM 의 경우 문자열 1 개 만 가능
+
+(LEADING '  '    안에 스페이스바가 2번 들어감
+
+ORA-30001: trim set should have only one character
+30001. 00000 -  "trim set should have only one character"
+*Cause:    Trim set contains more or less than 1 character. This is not
+           allowed in TRIM function.
+*/
+SELECT '        점        심       ',
+                TRIM(LEADING ' ' FROM '        점        심       ')    -- 앞쪽 공백 제거  
+FROM DUAL;
+
+SELECT '        점        심       ',
+                TRIM(TRAILING ' ' FROM '        점        심       ')    -- 뒤쪽 공백 제거 
+FROM DUAL;
+--육안상 뒤쪽 공백 제거한 것이 보이지 않을수 있으나 뒤 공백이 제거된 상태에서 출력
+
+SELECT '        점        심       ',
+                TRIM(BOTH ' ' FROM '        점        심       ')    -- 앙쪽 공백 제거 
+FROM DUAL;
+
+
+--앞쪽 뒤쪽 양쪽 공백제거 한번에 사용하기
+SELECT '        점        심       ',
+                TRIM(LEADING ' ' FROM '        점        심       '),    -- 앞쪽 공백 제거
+                TRIM(TRAILING  ' ' FROM '        점        심       '),    -- 뒤쪽 공백 제거 
+                TRIM(BOTH ' ' FROM '        점        심       ')    -- 양쪽 공백 제거 
+FROM DUAL;
+
+
+/*
+REPLACE : 특정 문자열을 대체할 때 사용
+
+사용방법
+(문자열 | 컬럼명 , 찾을 문자열 , 바꿀 문자열)
+*/
+
+--NATIONAL 테이블에서 한국으로 적혀있는 글자를 대한민국으로 변경하기
+SELECT * FROM national;
+
+SELECT NATIONAL_CODE, NATIONAL_NAME, REPLACE(NATIONAL_NAME, '한국', '대한민국')
+FROM national;
 
 
 
