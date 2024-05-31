@@ -88,9 +88,9 @@ FROM DUAL;
 
 -- EMPLOYEE 테이블에서
 -- 사원명, 이메일 아이디에서 @ 앞에있는 아이디만
---가지고 오고
---이메일 아이디를 오름차순 조회
-
+-- 가지고 오고
+-- 이메일 아이디를 오름차순 조회
+-- -> 외우기  손으로 작성할 때 한글자도 틀리지 않고 작성
 SELECT EMP_NAME, SUBSTR(EMAIL, 1, INSTR(EMAIL, '@') -1) AS "이메일 아이디"
 FROM EMPLOYEE
 ORDER BY "이메일 아이디";
@@ -102,6 +102,76 @@ ORDER BY "이메일 아이디";
 SELECT EMP_NAME, SUBSTR(EMAIL, 1, INSTR(EMAIL, '@') ) AS "이메일 아이디"
 FROM EMPLOYEE
 ORDER BY "이메일 아이디";
+
+-- INSTR(EMAIL, 1) 을 작성하게 되면 나타나는 결과
+SELECT EMP_NAME, SUBSTR(EMAIL, 1 ) AS "이메일 아이디"
+FROM EMPLOYEE
+ORDER BY "이메일 아이디";
+
+
+-- 앞에서 부터 값을 가지고 올 때는 + 를 작성해주지만
+-- 뒤에서 부터 값을 가지고 오길 원할 때는 -를 작성
+SELECT EMP_ID, PHONE, SUBSTR(PHONE, -4) AS "마지막_네_자리"
+FROM EMPLOYEE;
+
+
+/******** 그룹 관련 함수 **********/
+
+
+-- COUNT 행의 총 개수를 셀 때 사용하는 함수
+
+/*
+COUNT 사용 방법
+COUNT(*) : 조회된 모든 행의 개수 반환 
+                -> 이름, 주소 와 같은 항목이 몇개 있는가?
+COUNT(컬럼명) : 지정된 컬럼 값이 NULL이 아닌 행의 개수 반환 
+                        (NULL은 제외하고 개수를 작성하겠다는 의미)
+                -> 00개 조회되었습니다. 검색한 내역 총 몇개인가
+COUNT(DISTINCT  컬럼명) : 지정된 컬럼에서 중복 값을 제외한 행의 개수 반환
+*/
+
+--EMPLOYEE 테이블 전체 행의 개수
+SELECT COUNT(*) 
+FROM EMPLOYEE;
+
+--전화번호가 있는 사원의 수
+SELECT COUNT(*) 
+FROM EMPLOYEE
+WHERE PHONE IS NOT NULL;
+
+--좀 더 가볍게 WHERE을 사용하지 않고
+--전화번호가 있는 사원의 수
+SELECT COUNT(PHONE)
+FROM EMPLOYEE;
+
+--AVG 평균 
+-- 모든 사원의 평균 급여 조회
+SELECT AVG(SALARY)
+FROM EMPLOYEE;
+
+
+
+
+-- CEIL      올림 
+SELECT CEIL(AVG(SALARY))
+FROM EMPLOYEE;
+
+-- FLOOR   내림
+SELECT FLOOR(AVG(SALARY))
+FROM EMPLOYEE;
+
+-- ROUND 반올림
+SELECT ROUND(AVG(SALARY))
+FROM EMPLOYEE;
+
+
+
+
+
+
+
+
+
 
 
 
