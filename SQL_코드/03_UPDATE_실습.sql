@@ -91,12 +91,31 @@ select emp_name, email from employee2;
 update employee2
 set phone = replace(phone, '010', '010-')
 where phone like '010%';
+/*
+EMPLOYEE2"."PHONE" (actual: 13, maximum: 12)
+-> 행 최대 크기 12자리로 설정해줬기 때문에 나중에 발생하는 에러
+--> 행 최대 크기를 늘리거나 다시 돌아가기 rollback 설정
 
+*/
 rollback;
 select * from employee2;
 
 --특정 입사일을 가진 직원의 입사일 변경
 --hire-date 1999-09-09 입사한직원 -> 2000-01-02
+update employee2
+set hire_date = to_date('2000-01-01', 'YYYY-MM-DD')
+WHERE HIRE_DATE = TO_DATE('1999-09-09', 'YYYY-MM-DD');
+
+COMMIT;
+
+SELECT * FROM department2;
+
+UPDATE department2
+SET DEPT_TITLE = '인사팀';
+
+SELECT * FROM department2;
+
+ROLLBACK;
 
 
 
