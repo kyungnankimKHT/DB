@@ -108,14 +108,79 @@ GROUP BY DEPT_CODE
 ORDER BY "평균 급여" DESC;
 
 
+-- 그룹을 세분화 하여 조회하기 --
+-- 1. 각 부서별 사원들의 퇴사 여부를 조회하고 사원수 조회
+SELECT DEPT_CODE, ENT_YN, COUNT(*) AS "사원수"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE, ENT_YN;
 
+-- 각 부서별, 직급별, 입사일에 따른 사원수 조회
+SELECT DEPT_CODE, JOB_CODE, HIRE_DATE, COUNT(*) AS "사원수"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE, JOB_CODE, HIRE_DATE
+ORDER BY DEPT_CODE, JOB_CODE, HIRE_DATE;
+--공채 채용 후 기수별 남아있는 사원 수 조회할 때 사용
 
+/* HAVING 실습 */
+-- 1. 각 부서별 평균 급여가 400만원 이상인 부서 조회
+SELECT DEPT_CODE, AVG(SALARY) AS "평균월급"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE
+HAVING AVG(SALARY) >= 4000000;
+/*
+D9 부서만 평균 급여가 400만원 이상인 것
+D9	5900000
+*/
 
+-- 2. 각 부서별 직원 수가 5명 이상인 부서 조회
+SELECT DEPT_CODE, COUNT(*) AS "부서별 직원 수"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE
+HAVING COUNT(*) >= 5;
 
+-- D5	6
 
+-- 3. 각 부서별 보너스 평균이 0.2 이상인 부서 조회
+SELECT AVG(BONUS) AS "평균"
+FROM EMPLOYEE
+GROUP BY DEPT_CODE
+HAVING AVG(BONUS) >= 0.2;
+/*
+0.25
+0.3
+0.2
+0.3
+*/
+-- 4. 각 직급별 최소 급여가 300만 이하인 직급 조회
+--MIN  AS "평균급여"
+SELECT JOB_CODE, MIN(SALARY) AS "평균급여"
+FROM EMPLOYEE
+GROUP BY JOB_CODE
+HAVING MIN(SALARY) <= 3000000;
+/*
+J7	1380000
+J6	2000000
+J5	2200000
+J4	1550000
+*/
+-- 5. EMPLOYEE 테이블에서
+-- 부서별 70년대생의 급여 평균이 300만 이상인 부서를 조회하고
+-- 부서코드 오름차순 정렬
 
+SELECT DEPT_CODE, FLOOR(AVG(SALARY)) AS "급여평균" 
+FROM EMPLOYEE
+-- WHERE TO_NUMBER(SUBSTR(EMP_NO,1,2)) BETWEEN 70 AND 79
+WHERE SUBSTR(EMP_NO, 1, 1) = '7'
+GROUP BY DEPT_CODE
+HAVING AVG(SALARY) >= 3000000
+ORDER BY DEPT_CODE;
 
-
+/*
+D1 D5 D6 부서는 70년 평균 급여가 300이상인 부서
+D1	3220000
+D5	3500000
+D6	3900000
+*/
 
 
 
